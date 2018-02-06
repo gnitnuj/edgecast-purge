@@ -1,10 +1,8 @@
-import helloWorld from '../src/index';
+import edgecast from '../src/index';
 
-describe(`my first test`, () => {
-
-  it(`must say hello world`, () => {
-    const actual = helloWorld();
-    expect(actual).toBe(`hello world`);
+describe(`edgecast service`, () => {
+  it(`must be of type `, () => {
+    const eS = new edgecast(`token`, `customer_id`);
+    expect(eS.constructor.name).toBe(`EdgeCastPurge`);
   });
-
 });
