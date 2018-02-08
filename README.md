@@ -35,7 +35,7 @@ edgecastPurge.purge(['first-url', 'second-url', 'nth-url']);
 
 ### Examples
 
-See [`example`](example/script.js) folder or the [runkit](https://runkit.com/gnitnuj/edgecast-purge) example.
+See [`example`](example/script.js) folder.
 
 ### Builds
 
