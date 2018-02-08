@@ -1,6 +1,19 @@
 const https = require(`https`);
 const path = require(`path`);
 
+// logging
+const winston = require(`winston`);
+const tsFormat = () => new Date().toLocaleTimeString();
+const logger = new winston.Logger({
+  transports: [
+    // colorize the output to the console
+    new winston.transports.Console({
+      timestamp: tsFormat,
+      colorize: true
+    })
+  ]
+});
+
 class EdgeCastPurge {
   /**
    * constructor
@@ -10,14 +23,7 @@ class EdgeCastPurge {
   constructor(token, customerId) {
     this._token = token;
     this._customerId = customerId;
-    this._endpoint = path.join(
-      `/v2`,
-      `mcc`,
-      `customers`,
-      customerId,
-      `edge`,
-      `purge`
-    );
+    this._endpoint = path.join(`/v2`, `mcc`, `customers`, customerId, `edge`, `purge`);
 
     this._headers = {
       Authorization: `tok: ${token}`,
@@ -65,13 +71,10 @@ class EdgeCastPurge {
           res.on(`end`, () => {
             const endData = chunk.join();
             if (res.statusCode >= 200 && res.statusCode < 300) {
-              console.log(`purged: ${resourceURL}`);
+              logger.info(`purged: ${resourceURL}`);
               return resolve(endData);
             }
-            console.log(
-              `error purging: ${resourceURL}; err=${endData.Message ||
-                endData.toString()}`
-            );
+            logger.error(`error purging: ${resourceURL}; err=${endData.Message || endData.toString()}`);
             reject(endData);
           });
         }
