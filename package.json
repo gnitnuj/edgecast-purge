@@ -6,7 +6,10 @@
   "browser": "dist/umd/edgecastPurge.js",
   "module": "dist/es/index.js",
   "jsxnext:main": "dist/es/index.js",
-  "files": ["dist", "src"],
+  "files": [
+    "dist",
+    "src"
+  ],
   "engines": {
     "node": ">=4.0.0"
   },
@@ -14,27 +17,19 @@
     "prepublish": "npm run build",
     "precommit": "npm run lint:test",
     "prepush": "npm run lint:test",
-
     "release": "release-it",
-
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
-
     "lint": "npm run lint:eslint",
     "lint:eslint": "eslint src/*.js",
-
     "test": "jest",
     "test:coverage": "jest --coverage ",
     "test:watch": "clear && jest --watch",
-
     "lint:test": "npm run lint && npm run test:coverage",
-
     "build": "npm run lint:test && npm run build:cjs && npm run build:es && npm run build:umd",
     "build:watch": "clear && rimraf dist/cjs && cross-env BABEL_ENV=cjs babel -w src --out-dir dist/cjs",
-
     "build:es": "rimraf dist/es && cross-env BABEL_ENV=es babel src --out-dir dist/es",
     "build:cjs": "rimraf dist/cjs && cross-env BABEL_ENV=cjs babel src --out-dir dist/cjs",
-    "build:umd":
-      "rimraf dist/umd && cross-env BABEL_ENV=es rollup -c & cross-env BABEL_ENV=es NODE_ENV=production rollup -c"
+    "build:umd": "rimraf dist/umd && cross-env BABEL_ENV=es rollup -c & cross-env BABEL_ENV=es NODE_ENV=production rollup -c"
   },
   "keywords": [],
   "author": "junting (junting.lu@gmail.com)",
@@ -59,5 +54,8 @@
     "rollup-plugin-bundle-size": "^1.0.1",
     "rollup-plugin-commonjs": "^8.2.0",
     "rollup-plugin-uglify": "^2.0.1"
+  },
+  "dependencies": {
+    "winston": "^2.4.0"
   }
 }
