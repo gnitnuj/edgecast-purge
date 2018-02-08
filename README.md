@@ -9,46 +9,28 @@
 
 > a service to purge media from edgecast&#39;s cache
 
-### Usage
-
-```js
-import edgecastPurge from 'edgecast-purge';
-
-```
-
 ### Installation
 
 Install via [yarn](https://github.com/yarnpkg/yarn)
 
-	yarn add edgecast-purge (--dev)
+    yarn add edgecast-purge (--dev)
 
 or npm
 
-	npm install edgecast-purge (--save-dev)
+    npm install edgecast-purge (--save-dev)
 
-
-### configuration
-
-You can pass in extra options as a configuration object (➕ required, ➖ optional, ✏️ default).
+### Usage
 
 ```js
 import edgecastPurge from 'edgecast-purge';
-
 ```
-
-➖ **property** ( type ) ` ✏️ default `
-<br/> 📝 description
-<br/> ❗️ warning
-<br/> ℹ️ info
-<br/> 💡 example
 
 ### methods
 
-#### #name
+#### #purge
 
 ```js
-edgecastPurge
-
+edgecastPurge.purge(['first-url', 'second-url', 'nth-url']);
 ```
 
 ### Examples
@@ -57,10 +39,8 @@ See [`example`](example/script.js) folder or the [runkit](https://runkit.com/gni
 
 ### Builds
 
-If you don't use a package manager, you can [access `edgecast-purge` via unpkg (CDN)](https://unpkg.com/edgecast-purge/), download the source, or point your package manager to the url.
-
 `edgecast-purge` is compiled as a collection of [CommonJS](http://webpack.github.io/docs/commonjs.html) modules & [ES2015 modules](http://www.2ality.com/2014/0
-  -9/es6-modules-final.html) for bundlers that support the `jsnext:main` or `module` field in package.json (Rollup, Webpack 2)
+-9/es6-modules-final.html) for bundlers that support the `jsnext:main` or `module` field in package.json (Rollup, Webpack 2)
 
 The `edgecast-purge` package includes precompiled production and development [UMD](https://github.com/umdjs/umd) builds in the [`dist/umd` folder](https://unpkg.com/edgecast-purge/dist/umd/). They can be used directly without a bundler and are thus compatible with many popular JavaScript module loaders and environments. You can drop a UMD build as a [`<script>` tag](https://unpkg.com/edgecast-purge) on your page. The UMD builds make `edgecast-purge` available as a `window.edgecastPurge` global variable.
 
