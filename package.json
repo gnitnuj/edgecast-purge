@@ -1,20 +1,16 @@
 {
   "name": "edgecast-purge",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "a service to purge media from edgecast&#39;s cache",
   "main": "dist/cjs/index.js",
   "browser": "dist/umd/edgecastPurge.js",
   "module": "dist/es/index.js",
   "jsxnext:main": "dist/es/index.js",
-  "files": [
-    "dist",
-    "src"
-  ],
+  "files": ["dist", "src"],
   "engines": {
     "node": ">=4.0.0"
   },
   "scripts": {
-
     "prepublish": "npm run build",
     "precommit": "npm run lint:test",
     "prepush": "npm run lint:test",
@@ -37,8 +33,8 @@
 
     "build:es": "rimraf dist/es && cross-env BABEL_ENV=es babel src --out-dir dist/es",
     "build:cjs": "rimraf dist/cjs && cross-env BABEL_ENV=cjs babel src --out-dir dist/cjs",
-    "build:umd": "rimraf dist/umd && cross-env BABEL_ENV=es rollup -c & cross-env BABEL_ENV=es NODE_ENV=production rollup -c"
-
+    "build:umd":
+      "rimraf dist/umd && cross-env BABEL_ENV=es rollup -c & cross-env BABEL_ENV=es NODE_ENV=production rollup -c"
   },
   "keywords": [],
   "author": "junting (junting.lu@gmail.com)",
