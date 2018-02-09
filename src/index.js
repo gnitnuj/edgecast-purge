@@ -1,17 +1,17 @@
-const https = require(`https`);
-const path = require(`path`);
+const https = require('https');
+const path = require('path');
+const winston = require('winston');
 
-// logging
-const winston = require(`winston`);
+// winston/logging configuration
 const tsFormat = () => new Date().toLocaleTimeString();
 const logger = new winston.Logger({
   transports: [
     // colorize the output to the console
     new winston.transports.Console({
       timestamp: tsFormat,
-      colorize: true
-    })
-  ]
+      colorize: true,
+    }),
+  ],
 });
 
 class EdgeCastPurge {
@@ -21,14 +21,14 @@ class EdgeCastPurge {
    * @param {string} customerId - the customer id
    */
   constructor(token, customerId) {
-    this._token = token;
-    this._customerId = customerId;
-    this._endpoint = path.join(`/v2`, `mcc`, `customers`, customerId, `edge`, `purge`);
+    this.token = token;
+    this.customerId = customerId;
+    this.endpoint = path.join('/v2', 'mcc', 'customers', customerId, 'edge', 'purge');
 
-    this._headers = {
+    this.headers = {
       Authorization: `tok: ${token}`,
-      Accept: `application/json`,
-      'Content-Type': `application/json`
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     };
   }
 
@@ -37,47 +37,42 @@ class EdgeCastPurge {
    * @param {array} purge list - resources to purge
    */
   purge(toPurge) {
-    if (typeof toPurge === `string`) {
-      toPurge = [toPurge];
-    }
+    const purgeList = typeof toPurge === 'string' ? [toPurge] : toPurge;
 
-    return Promise.all(
-      toPurge.map(resourceURL => {
-        return this._purge(resourceURL);
-      })
-    );
+    return Promise.all(purgeList.map(resourceURL => this.purgeRsource(resourceURL)));
   }
 
-  _purge(resourceURL) {
+  purgeRsource(resourceURL) {
     return new Promise((resolve, reject) => {
       const postData = {
         MediaPath: resourceURL,
-        MediaType: `3`
+        MediaType: '3',
       };
 
       const chunk = [];
       const req = https.request(
         {
-          method: `PUT`,
-          hostname: `api.edgecast.com`,
+          method: 'PUT',
+          hostname: 'api.edgecast.com',
           port: 443,
-          path: this._endpoint,
-          headers: this._headers
+          path: this.endpoint,
+          headers: this.headers,
         },
-        res => {
-          res.on(`data`, d => {
+        // prettier-ignore
+        (res) => {
+          res.on('data', (d) => {
             chunk.push(d);
           });
-          res.on(`end`, () => {
+          res.on('end', () => {
             const endData = chunk.join();
             if (res.statusCode >= 200 && res.statusCode < 300) {
               logger.info(`purged: ${resourceURL}`);
               return resolve(endData);
             }
             logger.error(`error purging: ${resourceURL}; err=${endData.Message || endData.toString()}`);
-            reject(endData);
+            return reject(endData);
           });
-        }
+        },
       );
       req.write(JSON.stringify(postData));
       req.end();
