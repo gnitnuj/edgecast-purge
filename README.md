@@ -27,10 +27,23 @@ import edgecastPurge from 'edgecast-purge';
 
 ### methods
 
-#### #purge
+#### init
 
 ```js
-edgecastPurge.purge(['first-url', 'second-url', 'nth-url']);
+const Edgecast = require('edgecast-purge');
+const edgecastService = new Edgecast('your-edgecast-token', 'your-edgecast-account-id');
+```
+
+#### purge multiple urls
+
+```js
+edgecastService.purge(['first-url', 'second-url', 'nth-url']);
+```
+
+#### purge single url
+
+```js
+edgecastService.purge('single-url');
 ```
 
 ### Examples
